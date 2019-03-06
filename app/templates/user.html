@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container">
+    {% for message in get_flashed_messages(category_filter=["success"]) %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{ message }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% for message in get_flashed_messages(category_filter=["warning"]) %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{ message }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    <div class="jumbotron flex-column">
+        <h1 class="display-4">username</h1>
+        
+        <a class="btn btn-outline-dark" href="" role="button">Follow</a>
+
+        <a href="">
+            追蹤他的人: <span class="badge badge-pill badge-secondary">11</span>
+        </a>
+        <a href="">
+            追蹤人數: <span class="badge badge-pill badge-secondary">21</span>
+        </a>
+        <p class="lead">Real Name: name</p>
+        <p class="lead">E-mail: <a href="mailto:123@gmail.com">123@gmail.com</a></p>
+
+        <div class="d-inline-flex justify-content-end">
+            <div class="btn-group-vertical">
+                <a class="btn btn-outline-dark" href="{{ url_for('index') }}" role="button">編輯個人資料</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

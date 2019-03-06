@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+
+    <!--貼文-->
+    <div class="card">
+        <div class="card-header">
+            作者:{{ post.author.username }}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <hr>
+            <p class="card-text">{{ post.body_html | safe }}</p>
+        </div>
+        <div class="card-footer text-muted">
+            貼文日期:{{ post.created }}
+        </div>
+    </div>
+
+    <hr>
+
+    <!--評論-->
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-4">
+            <h1 class="h3 mb-3 font-weight-normal">評論</h1>
+        </div>
+
+        <div class="form-group">
+            {{ form.body() }}
+        </div>
+
+        <div class="form-group">
+            {{ form.submit() }}
+        </div>
+    </form>
+
+    <hr>
+
+    <!--評論列表-->
+    {% for comment in post.comments|sort(attribute='created', reverse=True) %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ comment.author.username }}</h5>
+            {{ comment.body }}
+        </div>
+    </div>
+    <br>
+    {% endfor %}
+
+</div>
+{% endblock %}
