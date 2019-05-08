@@ -32,7 +32,7 @@
             <h5 class="card-title">{{ post.title }}</h5>
             <hr>
             <p class="card-text">{{ post.body_html | safe }}</p>
-            <a class="btn btn-primary" href="{{ url_for('main.post', id=post.id) }}">詳情</a>
+            <a class="btn btn-primary" href="{{ url_for('post', id=post.id) }}">詳情</a>
         </div>
         <div class="card-footer text-muted">
             貼文日期:{{ post.created }}
@@ -45,7 +45,7 @@
         <div class="col-md-6 px-0">
             <h1 class="display-4 font-italic">逢甲大學 - 黑客社</h1>
             <p class="lead my-3">黑客社 demo 網站</p>
-            <p class="lead mb-0"><a href="{{ url_for('auth.regist') }}" class="text-white font-weight-bold">立即註冊</a></p>
+            <p class="lead mb-0"><a href="{{ url_for('regist') }}" class="text-white font-weight-bold">立即註冊</a></p>
         </div>
     </div>
     {% endif %}

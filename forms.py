@@ -1,8 +1,26 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
+from flask_pagedown.fields import PageDownField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms import ValidationError
-from ..models import User
+
+class PostForm(FlaskForm):
+    title = StringField('標題', 
+                        validators=[DataRequired()],
+                        render_kw={'class': 'form-control', 'placeholder': '標題'}
+                        )
+    body = PageDownField("分享您的文章", 
+                        validators=[DataRequired(message='不能為空!')],
+                        render_kw={'class': 'form-control', 'placeholder': '分享您的文章'}
+                        )
+    submit = SubmitField('Submit', render_kw={'class': 'btn btn-lg btn-primary btn-block'})
+
+class CommentForm(FlaskForm):
+    body = PageDownField('寫下您的評論', 
+                        validators=[DataRequired()],
+                        render_kw={'class': 'form-control', 'placeholder': '寫下您的評論'}
+                        )
+    submit = SubmitField('Submit', render_kw={'class': 'btn btn-lg btn-primary btn-block'})
 
 class LoginForm(FlaskForm):
     username = StringField(
@@ -25,16 +43,9 @@ class LoginForm(FlaskForm):
 
 
 class RegistForm(FlaskForm):
-    def validata_email(self, field):
-        if User.query.filter_by(email=field.data).first():
-            raise ValidationError('Email已被註冊')
-
-    def validata_username(self, field):
-        if User.query.filter_by(username=field.data).first():
-            raise ValidationError('使用者已被註冊')
     email = StringField('Email address',
                         validators=[DataRequired(
-                            message='不能為空!'), Email(message='格式錯誤!'), Length(1, 64, message="長度需介於1到64之間"), validata_email],
+                            message='不能為空!'), Email(message='格式錯誤!'), Length(1, 64, message="長度需介於1到64之間")],
                         render_kw={'class': 'form-control',
                                    'placeholder': 'Email address'}
                         )
@@ -44,7 +55,7 @@ class RegistForm(FlaskForm):
                            )
     username = StringField(
         'Username',
-        validators=[DataRequired(message='不能為空!'), validata_username],
+        validators=[DataRequired(message='不能為空!')],
         render_kw={'class': 'form-control', 'placeholder': 'Username'}
     )
     password = PasswordField(
